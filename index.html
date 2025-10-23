@@ -2,9 +2,9 @@
     2025 자유새 정기연주회 모바일 초대장 (7페이지 버전)
     
     [핵심 수정]
-    1. 모든 페이지 배경 이미지 URL을 '정기연주회' (7페이지) 버전으로 복원했습니다.
-    2. 4페이지 '오시는 길'의 장소를 '사천문화원 대강당 (사천시 문선4길 21)'으로 복원했습니다.
-    3. 지도 버튼 디자인만 사용자가 요청하신 입체적이고 화려한 스타일로 최종 적용했습니다.
+    1. 4페이지 상단의 불필요한 '정기연주회 타이틀, 일시, 주소' 정보를 모두 제거했습니다.
+    2. 사용자 요청에 따라 '행사장소 : 사천문화원 대강당' 정보만 지도 상단에 깔끔하게 표시되도록 수정했습니다.
+    3. 지도 버튼 스타일은 이전 단계에서 확정된 '클래스 직접 적용 방식'을 유지했습니다.
 -->
 <!DOCTYPE html>
 <html lang="ko">
@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2025 자유새 정기연주회에 초대합니다.</title>
     
-    <!-- 카카오톡 미리보기 정보 (문화원 정보로 복원) -->
+    <!-- 카카오톡 미리보기 정보 (문화원 정보) -->
     <meta property="og:image" content="https://raw.githubusercontent.com/Monster-GD/music-concert-2025/main/%EB%AA%A8%EB%B0%94%EC%9D%BC%20%EC%B4%88%EB%8C%80%20(%EC%A0%95%EA%B8%B0%EC%97%B0%EC%A3%BC%ED%9A%8C)%202025%2010%2023_1.jpg">
     <meta property="og:title" content="2025. 자유새 정기연주회에 초대합니다.">
     <meta property="og:description" content="2025. 11. 1.(토) 18:30 사천문화원 대강당">
@@ -117,21 +117,34 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* 내용물을 중앙에 배치 */
             justify-content: center; 
             padding-bottom: 0; 
+        }
+
+        /* [수정됨] 행사 장소 정보 박스 스타일 (단일 정보만 표시) */
+        .event-details-box {
+            /* 지도 및 버튼 전체 블록을 위로 이동시키기 위해 transform 적용 */
+            transform: translateY(-40px);
+            margin-bottom: 1.5rem; 
+            
+            /* 핵심 정보 박스 스타일: 심플한 검은색 배경에 흰색 글씨로 변경 */
+            @apply max-w-xs w-auto px-4 py-2 rounded-full shadow-lg text-center bg-gray-800 bg-opacity-85;
+        }
+
+        .event-details-box p {
+            /* '행사장소' 정보만 남기고 스타일 조정 */
+            @apply text-white text-base md:text-lg font-bold;
         }
 
         .map-container {
             width: 80%; 
             max-width: 400px;
-            margin-top: 1rem; 
             margin-bottom: 1.5rem; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             border-radius: 1rem;
             overflow: hidden;
-            /* 지도 캡처 이미지의 상하 위치를 배경 이미지에 맞게 미세 조정 */
-            transform: translateY(10px); 
+            /* event-details-box와 동일하게 위로 이동 */
+            transform: translateY(-40px); 
         }
 
         .page-4-buttons {
@@ -140,36 +153,18 @@
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
-            margin-bottom: 2rem; 
+            margin-bottom: 0; 
+            /* event-details-box와 동일하게 위로 이동 */
+            transform: translateY(-40px); 
         }
 
-        /* 지도 링크 버튼 공통 스타일 (사용자 요청 스타일 반영) */
-        .map-link-btn {
-            /* 사용자 요청 스타일 */
-            @apply w-full inline-block font-bold py-3 px-6 rounded-full transition-all transform hover:scale-[1.05] hover:shadow-xl 
-                   focus:outline-none focus:ring-2 focus:ring-offset-2 border-2 border-transparent text-center;
-        }
-        
-        /* 각 지도 앱 색상 적용 */
-        .naver-btn { 
-            @apply bg-green-600 text-white focus:ring-green-500 hover:border-white; 
-        }
-        .kakao-btn { 
-            @apply bg-yellow-500 text-gray-800 focus:ring-yellow-400 hover:border-white; 
-        }
-        .google-btn { 
-            @apply bg-blue-600 text-white focus:ring-blue-500 hover:border-white; 
-        }
-        
         /* 주차 안내 문구 스타일 */
         .parking-info {
-            transform: translateY(30px);
+            /* 버튼 아래로 배치되고, 전체적으로 위로 이동 */
+            transform: translateY(-30px); 
             @apply text-sm text-gray-700 font-medium p-2 bg-white bg-opacity-70 rounded-lg shadow-md max-w-xs text-center border border-gray-300;
         }
-        /* 행사장소 표시 스타일 */
-        .location-info {
-            @apply mb-4 text-white text-lg font-bold p-2 bg-black bg-opacity-50 rounded-lg hover:underline transition-transform transform hover:scale-105;
-        }
+        
     </style>
 </head>
 <body>
@@ -187,11 +182,12 @@
         <!-- 4페이지: 오시는 길 (문화원 정보 & 버튼 디자인 적용) -->
         <div id="page-4" class="page" style="background-image: url('https://raw.githubusercontent.com/Monster-GD/music-concert-2025/main/%EB%AA%A8%EB%B0%94%EC%9D%BC%20%EC%B4%88%EB%8C%80%20(%EC%A0%95%EA%B8%B0%EC%97%B0%EC%A3%BC%ED%9A%8C)%202025%2010%2023_4.jpg');">
             <div class="page-4-content">
-                <!-- 행사장소 텍스트와 링크 추가 (장소: 사천문화원, 주소: 사천시 문선4길 21) -->
-                <a href="https://www.google.com/maps/search/%EC%82%AC%EC%B2%9C%EC%8B%9C%20%EB%AC%B8%EC%84%A04%EA%B8%B8%2021" target="_blank"
-                   class="location-info">
-                    • 행사장소 : 사천문화원 대강당
-                </a>
+                <!-- [수정됨] 행사 장소 정보 박스 (요청된 '행사장소 : 사천문화원 대강당'만 표시) -->
+                <div class="event-details-box">
+                    <p>
+                        행사장소 : 사천문화원 대강당
+                    </p>
+                </div>
                 
                 <!-- 약도 이미지 URL: map-sacheon.png -->
                 <div class="map-container">
@@ -201,21 +197,24 @@
                          class="w-full h-auto rounded-xl">
                 </div>
                 
-                <!-- 최종 확정된 버튼 디자인 및 문화원 주소 적용 -->
+                <!-- 지도 버튼 (스타일 직접 적용 유지) -->
                 <div class="page-4-buttons">
                     <!-- 네이버 지도 버튼 (검색 주소: 사천시 문선4길 21) -->
                     <a href="https://map.naver.com/v5/search/%EC%82%AC%EC%B2%9C%EC%8B%9C%20%EB%AC%B8%EC%84%A04%EA%B8%B8%2021" target="_blank" 
-                        class="map-link-btn naver-btn">
+                        class="w-full inline-block font-bold py-3 px-6 rounded-full transition-all transform hover:scale-[1.05] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 border-2 border-transparent text-center
+                               bg-green-600 text-white focus:ring-green-500 hover:border-white">
                         네이버 지도로 오시는 길
                     </a>
                     <!-- 카카오맵(다음 지도) 버튼 (검색 주소: 사천시 문선4길 21) -->
                     <a href="https://map.kakao.com/?q=%EC%82%AC%EC%B2%9C%EC%8B%9C%20%EB%AC%B8%EC%84%A04%EA%B8%B8%2021" target="_blank"
-                        class="map-link-btn kakao-btn">
+                        class="w-full inline-block font-bold py-3 px-6 rounded-full transition-all transform hover:scale-[1.05] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 border-2 border-transparent text-center
+                               bg-yellow-500 text-gray-800 focus:ring-yellow-400 hover:border-white">
                         카카오맵(다음 지도)으로 오시는 길
                     </a>
                     <!-- 구글 지도 버튼 (검색 주소: 사천시 문선4길 21) -->
-                    <a href="https://www.google.com/maps/search/%EC%82%AC%EC%B2%9C%EC%8B%9C%20%EB%AC%B8%EC%84%A04%EA%B8%B8%2021" target="_blank" 
-                        class="map-link-btn google-btn">
+                    <a href="https://www.google.com/maps/search/사천시+문선4길+21" target="_blank" 
+                        class="w-full inline-block font-bold py-3 px-6 rounded-full transition-all transform hover:scale-[1.05] hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 border-2 border-transparent text-center
+                               bg-blue-600 text-white focus:ring-blue-500 hover:border-white">
                         구글 지도로 오시는 길
                     </a>
                 </div>
@@ -296,7 +295,6 @@
                 indicator.addEventListener('click', () => {
                     currentPageIndex = index;
                     pages[currentPageIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-                    // scrollIntoView 후 스크롤이 완료되지 않을 수 있으므로 updateUI는 scroll 이벤트를 통해 호출되도록 맡깁니다.
                 });
                 indicators.appendChild(indicator);
             });
@@ -323,7 +321,6 @@
         });
         container.addEventListener('touchend', (e) => {
             let endX = e.changedTouches[0].clientX;
-            // 스와이프를 감지하고, 스크롤 후 최종 위치를 보정하기 위해 getCurrentPageIndex를 호출합니다.
             // 50ms 후 호출하여 스크롤 애니메이션이 어느 정도 끝난 후 정확한 위치를 잡도록 합니다.
             setTimeout(getCurrentPageIndex, 50);
 
