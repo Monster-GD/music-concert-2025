@@ -5,6 +5,9 @@
     1. 4페이지 상단의 불필요한 '정기연주회 타이틀, 일시, 주소' 정보를 모두 제거했습니다.
     2. 사용자 요청에 따라 '행사장소 : 사천문화원 대강당' 정보만 지도 상단에 깔끔하게 표시되도록 수정했습니다.
     3. 지도 버튼 스타일은 이전 단계에서 확정된 '클래스 직접 적용 방식'을 유지했습니다.
+    
+    [추가 수정]
+    4. '행사장소' 정보 박스를 눈에 띄는 빨간색 배경과 큰 폰트로 강조했습니다.
 -->
 <!DOCTYPE html>
 <html lang="ko">
@@ -127,13 +130,15 @@
             transform: translateY(-40px);
             margin-bottom: 1.5rem; 
             
-            /* 핵심 정보 박스 스타일: 심플한 검은색 배경에 흰색 글씨로 변경 */
-            @apply max-w-xs w-auto px-4 py-2 rounded-full shadow-lg text-center bg-gray-800 bg-opacity-85;
+            /* 핵심 정보 박스 스타일: 강조된 빨간색 배경, 흰색 글씨, 더 큰 둥근 모서리 */
+            /* 배경색을 강조색(빨간색)으로 변경하고 패딩을 늘려 시각적 강조 */
+            @apply max-w-sm w-auto px-6 py-3 rounded-xl shadow-2xl text-center bg-red-600 bg-opacity-95 border-4 border-white;
         }
 
         .event-details-box p {
             /* '행사장소' 정보만 남기고 스타일 조정 */
-            @apply text-white text-base md:text-lg font-bold;
+            /* 텍스트 크기를 더 크게 조정 */
+            @apply text-white text-xl md:text-2xl font-extrabold tracking-wider;
         }
 
         .map-container {
